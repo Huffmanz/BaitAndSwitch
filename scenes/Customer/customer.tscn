@@ -1,0 +1,110 @@
+[gd_scene load_steps=25 format=3 uid="uid://df3mvtjgdf5j1"]
+
+[ext_resource type="Script" path="res://scenes/Customer/Customer.cs" id="1_oiv4i"]
+[ext_resource type="Resource" uid="uid://btwo4tu52fskl" path="res://resources/swordfish.tres" id="2_7xxlq"]
+[ext_resource type="Resource" uid="uid://dyk2ho5d26n83" path="res://resources/shark.tres" id="2_kflag"]
+[ext_resource type="Resource" uid="uid://cr5mvhasr10c1" path="res://resources/orange_fish.tres" id="2_vmp0d"]
+[ext_resource type="Resource" uid="uid://b0egmrqv8jowq" path="res://resources/pink_fish.tres" id="3_8al38"]
+[ext_resource type="Texture2D" uid="uid://b4psaqvr1g02h" path="res://assets/free-fishing-game-assets-pixel-art-pack/3 Objects/Boat.png" id="3_uqsd0"]
+[ext_resource type="Resource" uid="uid://cfvhdvjr87kyd" path="res://resources/purple_fish.tres" id="4_0y3cs"]
+[ext_resource type="Texture2D" uid="uid://b77xf7hgff851" path="res://assets/free-fishing-game-assets-pixel-art-pack/2 Character animation/Woodcutter_row.png" id="4_kit2e"]
+[ext_resource type="Resource" uid="uid://4ysetxtcxgji" path="res://resources/red_fish.tres" id="5_qbc08"]
+[ext_resource type="PackedScene" uid="uid://cwapn6b2ca7wc" path="res://scenes/Collectables/coin.tscn" id="6_kp7aj"]
+[ext_resource type="PackedScene" uid="uid://vu0hfa60jp4p" path="res://sfx/random_audio_player.tscn" id="11_sqk2p"]
+[ext_resource type="AudioStream" uid="uid://b30m8lg4pmuvu" path="res://assets/sound/sfx/PP_Collect_Coin_1_1.wav" id="12_mbnu4"]
+[ext_resource type="AudioStream" uid="uid://6rujg2lkw2de" path="res://assets/sound/sfx/PP_Collect_Coin_1_2.wav" id="13_epgmd"]
+[ext_resource type="AudioStream" uid="uid://cqfdp7xru5luj" path="res://assets/sound/sfx/PP_Collect_Coin_1_3.wav" id="14_c4ak1"]
+[ext_resource type="AudioStream" uid="uid://cjsdg1uqb1bar" path="res://assets/sound/sfx/PP_Collect_Item_1_1.wav" id="15_gjl7b"]
+[ext_resource type="AudioStream" uid="uid://h0vlpw8v4ju6" path="res://assets/sound/sfx/PP_Collect_Item_1_2.wav" id="16_n0kvi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ypc8"]
+atlas = ExtResource("4_kit2e")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4rsgl"]
+atlas = ExtResource("4_kit2e")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iaup5"]
+atlas = ExtResource("4_kit2e")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8bp2"]
+atlas = ExtResource("4_kit2e")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_12ngh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ypc8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rsgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iaup5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8bp2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x5vom"]
+load_path = "res://.godot/imported/Icons - No Back.png-491c6471151f63eacfe91025fda09ace.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv08x"]
+atlas = SubResource("CompressedTexture2D_x5vom")
+region = Rect2(54, 162, 18, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3tedt"]
+size = Vector2(32, 32)
+
+[node name="Customer" type="Node2D" node_paths=PackedStringArray("gatherArea", "rayCast2D", "fishIconSprite", "boatSprite", "customerSprite", "gatherTimer", "randomAudioPlayer")]
+script = ExtResource("1_oiv4i")
+gatherArea = NodePath("GatherArea")
+rayCast2D = NodePath("RayCast2D")
+fishIconSprite = NodePath("FishIcon")
+fishResources = Array[Object]([ExtResource("2_vmp0d"), ExtResource("3_8al38"), ExtResource("4_0y3cs"), ExtResource("5_qbc08"), ExtResource("2_kflag"), ExtResource("2_7xxlq")])
+speed = 100.0
+boatSprite = NodePath("BoatSprite")
+customerSprite = NodePath("RowSprite")
+gatherTimer = NodePath("GatherTimer")
+coin = ExtResource("6_kp7aj")
+randomAudioPlayer = NodePath("RandomAudioPlayer")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(20, 0)
+collision_mask = 32
+hit_from_inside = true
+
+[node name="BoatSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_uqsd0")
+
+[node name="RowSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, -10)
+sprite_frames = SubResource("SpriteFrames_12ngh")
+autoplay = "default"
+frame_progress = 0.119312
+
+[node name="FishIcon" type="Sprite2D" parent="."]
+position = Vector2(-20, -17)
+texture = SubResource("AtlasTexture_mv08x")
+
+[node name="GatherArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatherArea"]
+shape = SubResource("RectangleShape2D_3tedt")
+
+[node name="GatherTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="RandomAudioPlayer" parent="." instance=ExtResource("11_sqk2p")]
+bus = &"sfx"
+audioStreams = Array[AudioStream]([ExtResource("12_mbnu4"), ExtResource("13_epgmd"), ExtResource("14_c4ak1"), ExtResource("15_gjl7b"), ExtResource("16_n0kvi")])

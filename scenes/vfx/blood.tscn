@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cy0uhevxctxxd"]
+
+[ext_resource type="Texture2D" uid="uid://d2jagdpncuc20" path="res://assets/circle.png" id="1_1m325"]
+[ext_resource type="Script" path="res://scenes/vfx/Blood.cs" id="2_iyvvs"]
+
+[sub_resource type="Curve" id="Curve_egj8q"]
+_data = [Vector2(0.0280899, 0.461538), 0.0, 0.0, 0, 0, Vector2(0.988764, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_7umni"]
+offsets = PackedFloat32Array(0, 0.72, 1)
+colors = PackedColorArray(0.85098, 0, 0.34902, 1, 0.85098, 0, 0.34902, 0.827451, 0.85098, 0, 0.34902, 0.0509804)
+
+[node name="Blood" type="CPUParticles2D" node_paths=PackedStringArray("timer")]
+z_index = -1
+emitting = false
+amount = 32
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("1_1m325")
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 180.0
+linear_accel_max = 100.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_egj8q")
+color = Color(0.85098, 0, 0.34902, 1)
+color_ramp = SubResource("Gradient_7umni")
+script = ExtResource("2_iyvvs")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true

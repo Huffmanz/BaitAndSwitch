@@ -1,0 +1,138 @@
+[gd_scene load_steps=17 format=3 uid="uid://c38v6updtg8ip"]
+
+[ext_resource type="PackedScene" uid="uid://bo8kmdjuikbqk" path="res://scenes/fish/fish_base.tscn" id="1_50tps"]
+[ext_resource type="Resource" uid="uid://btwo4tu52fskl" path="res://resources/swordfish.tres" id="2_8gpu7"]
+[ext_resource type="Texture2D" uid="uid://t0xgxuqx06ow" path="res://assets/SpearFishing/SwordFish - 48x32/SwordFish.png" id="2_l1ln3"]
+[ext_resource type="Script" path="res://scenes/fish/FishDieState.cs" id="3_sf01o"]
+[ext_resource type="PackedScene" uid="uid://mb355homffpi" path="res://scenes/vfx/blood_trail.tscn" id="4_gbseh"]
+[ext_resource type="Script" path="res://scenes/fish/swordfish/SwordfishChargeState.cs" id="5_6sxrm"]
+[ext_resource type="Script" path="res://scenes/fish/swordfish/SwordfishStuckState.cs" id="6_34khy"]
+[ext_resource type="Script" path="res://scenes/fish/FishGatherableState.cs" id="8_j5ttq"]
+[ext_resource type="PackedScene" uid="uid://itmfdhi1g1w" path="res://scenes/damage/hurtbox.tscn" id="8_j6rij"]
+[ext_resource type="PackedScene" uid="uid://cy0uhevxctxxd" path="res://scenes/vfx/blood.tscn" id="10_86qb7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uafqd"]
+radius = 4.0
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ycpf3"]
+radius = 8.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_bjful"]
+resource_name = "idle"
+length = 0.70001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c7nbl"]
+_data = {
+"idle": SubResource("Animation_bjful")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4v7e"]
+radius = 4.0
+height = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5d6ui"]
+radius = 16.1245
+
+[node name="SwordFish" instance=ExtResource("1_50tps")]
+fishResource = ExtResource("2_8gpu7")
+
+[node name="HealthComponent" parent="." index="0"]
+MaxHealth = 15
+
+[node name="CollisionShape2D" parent="." index="1"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_uafqd")
+
+[node name="Sprite2D" parent="." index="2"]
+texture = ExtResource("2_l1ln3")
+vframes = 1
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ycpf3")
+
+[node name="StateMachine" parent="." index="4" node_paths=PackedStringArray("currentState", "states")]
+currentState = NodePath("SwordfishChargeState")
+states = [NodePath("SwordfishDieState"), NodePath("SwordfishChargeState"), NodePath("SwordfishStuckState"), NodePath("GatherState")]
+
+[node name="SwordfishDieState" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("wallCheck", "areaToDisable")]
+script = ExtResource("3_sf01o")
+floatSpeed = 50.0
+bloodVFX = ExtResource("4_gbseh")
+wallCheck = NodePath("../../AirCheck")
+areaToDisable = NodePath("../../Hurtbox")
+
+[node name="SwordfishChargeState" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("wallCheck", "hurtbox")]
+script = ExtResource("5_6sxrm")
+wallCheck = NodePath("../../WallCheck")
+speed = 200.0
+acceleration = 200.0
+hurtbox = NodePath("../../Hurtbox")
+
+[node name="SwordfishStuckState" type="Node" parent="StateMachine" index="2" node_paths=PackedStringArray("stuckTimer", "hurtbox")]
+script = ExtResource("6_34khy")
+stuckTimer = NodePath("StuckTimer")
+hurtbox = NodePath("../../Hurtbox")
+
+[node name="StuckTimer" type="Timer" parent="StateMachine/SwordfishStuckState" index="0"]
+wait_time = 3.0
+one_shot = true
+
+[node name="GatherState" type="Node" parent="StateMachine" index="3" node_paths=PackedStringArray("gatherableArea", "gatherTimer")]
+script = ExtResource("8_j5ttq")
+gatherableArea = NodePath("../../GatherableArea")
+gatherTimer = NodePath("../../GatherTimer")
+
+[node name="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_c7nbl")
+}
+autoplay = "idle"
+
+[node name="WallCheck" type="RayCast2D" parent="." index="6"]
+position = Vector2(10, 0)
+target_position = Vector2(10, 0)
+collision_mask = 33
+hit_from_inside = true
+
+[node name="AirCheck" type="RayCast2D" parent="." index="7"]
+target_position = Vector2(0, -15)
+collision_mask = 32
+hit_from_inside = true
+
+[node name="Hurtbox" parent="." index="8" groups=["swordfish"] instance=ExtResource("8_j6rij")]
+collision_layer = 16
+collision_mask = 2
+bloodVFX = ExtResource("10_86qb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_f4v7e")
+
+[node name="GatherTimer" type="Timer" parent="." index="9"]
+wait_time = 20.0
+one_shot = true
+
+[node name="GatherableArea" type="Area2D" parent="." index="10"]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatherableArea" index="0"]
+shape = SubResource("CircleShape2D_5d6ui")

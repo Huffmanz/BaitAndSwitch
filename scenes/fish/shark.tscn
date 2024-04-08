@@ -1,0 +1,186 @@
+[gd_scene load_steps=22 format=3 uid="uid://e5rsip8tiiwv"]
+
+[ext_resource type="PackedScene" uid="uid://bo8kmdjuikbqk" path="res://scenes/fish/fish_base.tscn" id="1_k8oms"]
+[ext_resource type="Texture2D" uid="uid://butejsulb0yjn" path="res://assets/SpearFishing/Shark - 32x32/Shark.png" id="2_4eqfj"]
+[ext_resource type="Resource" uid="uid://dyk2ho5d26n83" path="res://resources/shark.tres" id="2_53awe"]
+[ext_resource type="Script" path="res://scenes/fish/SharkMoveState.cs" id="3_qcrwd"]
+[ext_resource type="Script" path="res://scenes/fish/shark/SharkEatState.cs" id="5_jvaqn"]
+[ext_resource type="PackedScene" uid="uid://cy0uhevxctxxd" path="res://scenes/vfx/blood.tscn" id="6_0labr"]
+[ext_resource type="Script" path="res://scenes/fish/FishDieState.cs" id="6_1t7cb"]
+[ext_resource type="PackedScene" uid="uid://vu0hfa60jp4p" path="res://sfx/random_audio_player.tscn" id="7_08yft"]
+[ext_resource type="PackedScene" uid="uid://mb355homffpi" path="res://scenes/vfx/blood_trail.tscn" id="7_dusrp"]
+[ext_resource type="AudioStream" uid="uid://dha4wj3wlm0rv" path="res://assets/sound/sfx/Food1.mp3" id="8_wrvu5"]
+[ext_resource type="Script" path="res://scenes/fish/FishGatherableState.cs" id="8_yvbcl"]
+[ext_resource type="AudioStream" uid="uid://btdmagv1g53ct" path="res://assets/sound/sfx/Food2.mp3" id="9_b6gvb"]
+[ext_resource type="AudioStream" uid="uid://cy2myqfyki5iw" path="res://assets/sound/sfx/Food3.mp3" id="10_43dbh"]
+[ext_resource type="AudioStream" uid="uid://dfi1ax1oqapee" path="res://assets/sound/sfx/Food4.mp3" id="11_mrs8e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7p315"]
+radius = 6.0
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q4wdj"]
+radius = 6.0
+
+[sub_resource type="Animation" id="Animation_ttecp"]
+resource_name = "attack"
+length = 1.14287
+step = 0.142857
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.142857, 0.285714, 0.428571, 0.571429, 0.714286, 0.857143, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.428571, 0.571429, 0.857143, 1.14286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 1), Vector2(1, 1), Vector2(2, 2), Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StateMachine/SharkEatState")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.714286),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EatFish"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ds3a1"]
+resource_name = "idle"
+length = 0.70001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wxhi8"]
+_data = {
+"attack": SubResource("Animation_ttecp"),
+"idle": SubResource("Animation_ds3a1")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fpf2j"]
+radius = 6.08276
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q2u65"]
+radius = 16.1245
+
+[node name="Shark" instance=ExtResource("1_k8oms")]
+z_index = 1
+collision_mask = 33
+fishResource = ExtResource("2_53awe")
+
+[node name="HealthComponent" parent="." index="0"]
+MaxHealth = 10
+
+[node name="CollisionShape2D" parent="." index="1"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_7p315")
+
+[node name="Sprite2D" parent="." index="2"]
+texture = ExtResource("2_4eqfj")
+vframes = 2
+frame = 15
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 64)
+
+[node name="CollisionShape2D" parent="Hitbox" index="1"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_q4wdj")
+
+[node name="StateMachine" parent="." index="4" node_paths=PackedStringArray("currentState", "states")]
+currentState = NodePath("SharkMoveState")
+states = [NodePath("SharkMoveState"), NodePath("SharkEatState"), NodePath("SharkDieState"), NodePath("SharkGatherState")]
+
+[node name="SharkMoveState" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("eatArea", "rayCast2D") groups=["shark"]]
+script = ExtResource("3_qcrwd")
+eatArea = NodePath("../../EatArea")
+rayCast2D = NodePath("../../WallCheck")
+speed = 50.0
+
+[node name="SharkEatState" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("eatArea", "randomAudioPlayer")]
+script = ExtResource("5_jvaqn")
+eatArea = NodePath("../../EatArea")
+bloodVfx = ExtResource("6_0labr")
+randomAudioPlayer = NodePath("RandomAudioPlayer")
+
+[node name="RandomAudioPlayer" parent="StateMachine/SharkEatState" index="0" instance=ExtResource("7_08yft")]
+bus = &"sfx"
+audioStreams = Array[AudioStream]([ExtResource("8_wrvu5"), ExtResource("9_b6gvb"), ExtResource("10_43dbh"), ExtResource("11_mrs8e")])
+
+[node name="SharkDieState" type="Node" parent="StateMachine" index="2" node_paths=PackedStringArray("wallCheck")]
+script = ExtResource("6_1t7cb")
+floatSpeed = 25.0
+bloodVFX = ExtResource("7_dusrp")
+wallCheck = NodePath("../../AirCheck")
+
+[node name="SharkGatherState" type="Node" parent="StateMachine" index="3" node_paths=PackedStringArray("gatherableArea", "gatherTimer")]
+script = ExtResource("8_yvbcl")
+gatherableArea = NodePath("../../GatherableArea")
+gatherTimer = NodePath("../../GatherTimer")
+
+[node name="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_wxhi8")
+}
+autoplay = "idle"
+
+[node name="WallCheck" type="RayCast2D" parent="." index="6"]
+target_position = Vector2(20, 0)
+collision_mask = 33
+hit_from_inside = true
+
+[node name="AirCheck" type="RayCast2D" parent="." index="7"]
+target_position = Vector2(0, -12)
+collision_mask = 32
+hit_from_inside = true
+
+[node name="EatArea" type="Area2D" parent="." index="8"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EatArea" index="0"]
+position = Vector2(10, 0)
+shape = SubResource("CircleShape2D_fpf2j")
+
+[node name="GatherTimer" type="Timer" parent="." index="9"]
+wait_time = 15.0
+one_shot = true
+
+[node name="GatherableArea" type="Area2D" parent="." index="10"]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatherableArea" index="0"]
+shape = SubResource("CircleShape2D_q2u65")

@@ -1,0 +1,148 @@
+[gd_scene load_steps=10 format=3 uid="uid://bcpn8o84lkmwr"]
+
+[ext_resource type="Script" path="res://ui/PlayerUI.cs" id="1_4twgg"]
+[ext_resource type="Script" path="res://ui/CoinUI.cs" id="2_c2cj4"]
+[ext_resource type="Texture2D" uid="uid://b6rehkk7eitdq" path="res://assets/SpearFishing/Icons - 18x18/Border.png" id="2_u8tp5"]
+[ext_resource type="Texture2D" uid="uid://dvk77nrr6rttu" path="res://assets/SpearFishing/Coin Big - 16x16.png" id="4_3hseq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uty3e"]
+texture = ExtResource("2_u8tp5")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgv3e"]
+atlas = ExtResource("4_3hseq")
+region = Rect2(1, 1, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ku1pa"]
+texture = ExtResource("2_u8tp5")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l46k5"]
+bg_color = Color(0.317647, 0.345098, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbvxk"]
+bg_color = Color(0, 0.65098, 0.494118, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[node name="PlayerUI" type="CanvasLayer" node_paths=PackedStringArray("airProgressBar", "healthProgressBar")]
+layer = 100
+script = ExtResource("1_4twgg")
+airProgressBar = NodePath("StatPanel/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/AirProgressBar")
+healthProgressBar = NodePath("StatPanel/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/HealthProgressBar")
+
+[node name="Coin" type="MarginContainer" parent="." node_paths=PackedStringArray("coinAmountLabel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("2_c2cj4")
+coinAmountLabel = NodePath("HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/CoinAmount")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Coin"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="Coin/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_uty3e")
+
+[node name="ColorRect" type="ColorRect" parent="Coin/HBoxContainer/PanelContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Coin/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Coin/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="Coin/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_dgv3e")
+expand_mode = 2
+
+[node name="CoinAmount" type="Label" parent="Coin/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "1"
+horizontal_alignment = 2
+
+[node name="StatPanel" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="VBoxContainer" parent="StatPanel"]
+custom_minimum_size = Vector2(100, 10)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="StatPanel/HBoxContainer"]
+custom_minimum_size = Vector2(16, 20)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ku1pa")
+
+[node name="ColorRect" type="ColorRect" parent="StatPanel/HBoxContainer/PanelContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="StatPanel/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="StatPanel/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="AirProgressBar" type="ProgressBar" parent="StatPanel/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_l46k5")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="HealthProgressBar" type="ProgressBar" parent="StatPanel/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_lbvxk")
+max_value = 1.0
+value = 0.5
+show_percentage = false

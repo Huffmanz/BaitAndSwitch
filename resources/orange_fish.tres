@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=5 format=3 uid="uid://cr5mvhasr10c1"]
+
+[ext_resource type="Script" path="res://resources/FishResource.cs" id="1_sv0dc"]
+[ext_resource type="Texture2D" uid="uid://blk7ls43nasut" path="res://assets/SpearFishing/Fish1 - 16x16/Orange.png" id="2_n3p4y"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xxlgt"]
+load_path = "res://.godot/imported/Icons - No Back.png-491c6471151f63eacfe91025fda09ace.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w4iv"]
+atlas = SubResource("CompressedTexture2D_xxlgt")
+region = Rect2(36, 162, 18, 18)
+
+[resource]
+script = ExtResource("1_sv0dc")
+Name = "Orange Fish"
+texture = ExtResource("2_n3p4y")
+icon = SubResource("AtlasTexture_0w4iv")
+Weight = 10
+minCoins = 1
+maxCoins = 3

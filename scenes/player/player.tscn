@@ -1,0 +1,244 @@
+[gd_scene load_steps=44 format=3 uid="uid://tkbh8a64y8ri"]
+
+[ext_resource type="Script" path="res://scenes/player/player.cs" id="1_o8tle"]
+[ext_resource type="Texture2D" uid="uid://gyia6tb6bvws" path="res://assets/SpearFishing/Diver-32x32/Diver.png" id="1_qem6o"]
+[ext_resource type="Texture2D" uid="uid://tvyjbs1sklja" path="res://assets/SpearFishing/Harpoon.png" id="2_uq2sh"]
+[ext_resource type="Script" path="res://scenes/player/SpearGun.cs" id="3_3ujpn"]
+[ext_resource type="Script" path="res://scenes/state_machine/StateMachine.cs" id="3_pqnf3"]
+[ext_resource type="PackedScene" uid="uid://6hdx0moq5syx" path="res://scenes/vfx/bubble_particles.tscn" id="4_owit6"]
+[ext_resource type="PackedScene" uid="uid://dmcuvf0w8ndrm" path="res://scenes/player/spear.tscn" id="4_p8msb"]
+[ext_resource type="Script" path="res://scenes/player/PlayerIdleState.cs" id="5_rfrir"]
+[ext_resource type="Script" path="res://scenes/player/PlayerMoveState.cs" id="6_monry"]
+[ext_resource type="PackedScene" uid="uid://d3vf1m0mojjkc" path="res://scenes/damage/health_component.tscn" id="9_7hntg"]
+[ext_resource type="AudioStream" uid="uid://dsw5mob2rruw6" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_01.wav" id="9_gavxh"]
+[ext_resource type="AudioStream" uid="uid://bttw32b8b667e" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_02.wav" id="10_4xqjq"]
+[ext_resource type="PackedScene" uid="uid://c5jt2b7fdsmwq" path="res://scenes/damage/hitbox.tscn" id="10_uq2f5"]
+[ext_resource type="AudioStream" uid="uid://dmsi43j12irxk" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_03.wav" id="11_vadk6"]
+[ext_resource type="PackedScene" uid="uid://vu0hfa60jp4p" path="res://sfx/random_audio_player.tscn" id="12_dyn17"]
+[ext_resource type="AudioStream" uid="uid://cxlyevam7stok" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_04.wav" id="12_t74um"]
+[ext_resource type="AudioStream" uid="uid://b24xqq4bxf4f8" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_05.wav" id="13_0rya3"]
+[ext_resource type="AudioStream" uid="uid://wlbdu6g067dy" path="res://assets/sound/sfx/punch_grit_wet_impact_01.wav" id="13_buy65"]
+[ext_resource type="AudioStream" uid="uid://3dpa6we2e01n" path="res://assets/sound/sfx/punch_grit_wet_impact_02.wav" id="14_jbgdl"]
+[ext_resource type="AudioStream" uid="uid://0kpqqixljxvv" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_06.wav" id="14_uvji6"]
+[ext_resource type="AudioStream" uid="uid://wbucq6lyou7b" path="res://assets/sound/sfx/punch_grit_wet_impact_03.wav" id="15_5wf0g"]
+[ext_resource type="AudioStream" uid="uid://c7rd8jao88gy2" path="res://assets/sound/sfx/bow_crossbow_arrow_shoot_type1_07.wav" id="15_f55gi"]
+[ext_resource type="AudioStream" uid="uid://ddqwwmvo3ndip" path="res://assets/sound/sfx/punch_grit_wet_impact_04.wav" id="16_wvkr6"]
+[ext_resource type="AudioStream" uid="uid://dd5hjuryba2dq" path="res://assets/sound/sfx/punch_grit_wet_impact_05.wav" id="17_6ledh"]
+[ext_resource type="AudioStream" uid="uid://cs4f0vas3h6vc" path="res://assets/sound/sfx/punch_grit_wet_impact_06.wav" id="18_mn0mp"]
+[ext_resource type="AudioStream" uid="uid://xowjevhgsyww" path="res://assets/sound/sfx/punch_grit_wet_impact_07.wav" id="19_4xoww"]
+[ext_resource type="AudioStream" uid="uid://bj850uux23yha" path="res://assets/sound/sfx/punch_grit_wet_impact_08.wav" id="20_fx0r7"]
+[ext_resource type="AudioStream" uid="uid://dg16j7swe6c5c" path="res://assets/sound/sfx/punch_grit_wet_impact_09.wav" id="21_ox0k2"]
+[ext_resource type="AudioStream" uid="uid://c7fxudu38ofiw" path="res://assets/sound/sfx/punch_grit_wet_impact_10.wav" id="22_52xce"]
+[ext_resource type="AudioStream" uid="uid://yms377dyt0yi" path="res://assets/sound/sfx/FA_Collect_Coin_1_1.wav" id="30_vc24p"]
+[ext_resource type="AudioStream" uid="uid://cvtbc5oqkpeov" path="res://assets/sound/sfx/FA_Collect_Coin_1_2.wav" id="31_7dn2x"]
+[ext_resource type="AudioStream" uid="uid://ccwu25nfs27ya" path="res://assets/sound/sfx/FA_Collect_Coin_1_3.wav" id="32_7x4ov"]
+[ext_resource type="AudioStream" uid="uid://rpuxfmov2fr2" path="res://assets/sound/sfx/FA_Collect_Coin_1_4.wav" id="33_tiuyv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nj1u7"]
+radius = 6.0
+height = 26.0
+
+[sub_resource type="Animation" id="Animation_uqd16"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpearGunHolder/SpearGun/GunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_ia56u"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpearGunHolder/SpearGun/GunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_6q6si"]
+resource_name = "shoot"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpearGunHolder/SpearGun/GunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nh6od"]
+_data = {
+"RESET": SubResource("Animation_uqd16"),
+"idle": SubResource("Animation_ia56u"),
+"shoot": SubResource("Animation_6q6si")
+}
+
+[sub_resource type="Animation" id="Animation_jss6n"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_83r7r"]
+_data = {
+"idle": SubResource("Animation_jss6n")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5oqe6"]
+radius = 7.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mekyn"]
+radius = 5.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_17b0o"]
+radius = 7.07107
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("spearGun", "collectableArea", "airTimer", "airDetection", "coinAudioPlayer", "Sprite2D", "AnimationPlayer", "StateMachine", "healthComponent") groups=["player"]]
+collision_layer = 2
+script = ExtResource("1_o8tle")
+spearGun = NodePath("SpearGunHolder/SpearGun")
+collectableArea = NodePath("CoinArea")
+maxAirLevel = 25
+airTimer = NodePath("AirTimer")
+airDetection = NodePath("AirDetection")
+coinAudioPlayer = NodePath("CoinAudioPlayer")
+Sprite2D = NodePath("Body")
+AnimationPlayer = NodePath("AnimationPlayer")
+StateMachine = NodePath("StateMachine")
+healthComponent = NodePath("HealthComponent")
+
+[node name="HealthComponent" parent="." instance=ExtResource("9_7hntg")]
+MaxHealth = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_nj1u7")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = ExtResource("1_qem6o")
+hframes = 7
+vframes = 4
+region_enabled = true
+region_rect = Rect2(0, 0, 224, 128)
+
+[node name="BubbleParticles" parent="Body" instance=ExtResource("4_owit6")]
+
+[node name="SpearGunHolder" type="Node2D" parent="."]
+
+[node name="SpearGun" type="Node2D" parent="SpearGunHolder" node_paths=PackedStringArray("attackTimer", "spearSpawnLocation", "animationPlayer", "randomAudioPlayer")]
+script = ExtResource("3_3ujpn")
+attackTimer = NodePath("Timer")
+spearSpawnLocation = NodePath("Marker2D")
+projectile = ExtResource("4_p8msb")
+animationPlayer = NodePath("AnimationPlayer")
+randomAudioPlayer = NodePath("ShotAudioPlayer")
+
+[node name="GunSprite" type="Sprite2D" parent="SpearGunHolder/SpearGun"]
+position = Vector2(15, 0)
+texture = ExtResource("2_uq2sh")
+vframes = 2
+frame = 1
+region_enabled = true
+region_rect = Rect2(1, 0, 31, 32)
+
+[node name="Marker2D" type="Marker2D" parent="SpearGunHolder/SpearGun"]
+position = Vector2(19, 1)
+
+[node name="Timer" type="Timer" parent="SpearGunHolder/SpearGun"]
+wait_time = 0.25
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpearGunHolder/SpearGun"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_nh6od")
+}
+
+[node name="ShotAudioPlayer" parent="SpearGunHolder/SpearGun" instance=ExtResource("12_dyn17")]
+bus = &"player"
+audioStreams = Array[AudioStream]([ExtResource("9_gavxh"), ExtResource("10_4xqjq"), ExtResource("11_vadk6"), ExtResource("12_t74um"), ExtResource("13_0rya3"), ExtResource("14_uvji6"), ExtResource("15_f55gi")])
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_83r7r")
+}
+autoplay = "idle"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("currentState", "states")]
+script = ExtResource("3_pqnf3")
+currentState = NodePath("IdleState")
+states = [NodePath("IdleState"), NodePath("MoveState")]
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("5_rfrir")
+
+[node name="MoveState" type="Node" parent="StateMachine"]
+script = ExtResource("6_monry")
+speed = 75.0
+
+[node name="AttackState" type="Node" parent="StateMachine"]
+
+[node name="CoinArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CoinArea"]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_5oqe6")
+
+[node name="Hitbox" parent="." node_paths=PackedStringArray("healthComponent", "randomAudioPlayer") instance=ExtResource("10_uq2f5")]
+collision_layer = 2
+collision_mask = 16
+healthComponent = NodePath("../HealthComponent")
+randomAudioPlayer = NodePath("HitAudioPlayer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CapsuleShape2D_mekyn")
+
+[node name="HitAudioPlayer" parent="Hitbox" instance=ExtResource("12_dyn17")]
+bus = &"sfx"
+audioStreams = Array[AudioStream]([ExtResource("13_buy65"), ExtResource("14_jbgdl"), ExtResource("15_5wf0g"), ExtResource("16_wvkr6"), ExtResource("17_6ledh"), ExtResource("18_mn0mp"), ExtResource("19_4xoww"), ExtResource("20_fx0r7"), ExtResource("21_ox0k2"), ExtResource("22_52xce")])
+
+[node name="AirDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AirDetection"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_17b0o")
+
+[node name="AirTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="CoinAudioPlayer" parent="." instance=ExtResource("12_dyn17")]
+bus = &"player"
+audioStreams = Array[AudioStream]([ExtResource("30_vc24p"), ExtResource("31_7dn2x"), ExtResource("32_7x4ov"), ExtResource("33_tiuyv")])

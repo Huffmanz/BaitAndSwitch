@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=5 format=3 uid="uid://dyk2ho5d26n83"]
+
+[ext_resource type="Script" path="res://resources/FishResource.cs" id="1_c86ya"]
+[ext_resource type="Texture2D" uid="uid://butejsulb0yjn" path="res://assets/SpearFishing/Shark - 32x32/Shark.png" id="2_o6wg5"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o0gpt"]
+load_path = "res://.godot/imported/Icons - No Back.png-491c6471151f63eacfe91025fda09ace.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o1m1"]
+atlas = SubResource("CompressedTexture2D_o0gpt")
+region = Rect2(36, 144, 18, 18)
+
+[resource]
+script = ExtResource("1_c86ya")
+Name = "Shark"
+texture = ExtResource("2_o6wg5")
+icon = SubResource("AtlasTexture_7o1m1")
+Weight = 5
+minCoins = 3
+maxCoins = 6

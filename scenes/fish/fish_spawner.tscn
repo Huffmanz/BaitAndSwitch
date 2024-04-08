@@ -1,0 +1,19 @@
+[gd_scene load_steps=7 format=3 uid="uid://cb1qw0f4fu0fg"]
+
+[ext_resource type="Script" path="res://scenes/fish/FishSpawner.cs" id="1_kh867"]
+[ext_resource type="Resource" uid="uid://cr5mvhasr10c1" path="res://resources/orange_fish.tres" id="2_ojx12"]
+[ext_resource type="Resource" uid="uid://b0egmrqv8jowq" path="res://resources/pink_fish.tres" id="3_es1ww"]
+[ext_resource type="Resource" uid="uid://cfvhdvjr87kyd" path="res://resources/purple_fish.tres" id="4_04ky4"]
+[ext_resource type="Resource" uid="uid://4ysetxtcxgji" path="res://resources/red_fish.tres" id="5_q5fx5"]
+[ext_resource type="PackedScene" uid="uid://dqeqdgw2sehca" path="res://scenes/fish/fish_prey.tscn" id="6_a5eq7"]
+
+[node name="FishSpawner" type="Node" node_paths=PackedStringArray("spawnArea")]
+script = ExtResource("1_kh867")
+spawnArea = NodePath("SpawnAarea")
+fishResources = Array[Object]([ExtResource("2_ojx12"), ExtResource("3_es1ww"), ExtResource("4_04ky4"), ExtResource("5_q5fx5")])
+objectToSpawn = ExtResource("6_a5eq7")
+groupName = "fish_prey"
+
+[node name="SpawnAarea" type="ReferenceRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

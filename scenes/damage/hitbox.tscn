@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5jt2b7fdsmwq"]
+
+[ext_resource type="Script" path="res://scenes/damage/Hitbox.cs" id="1_lvenf"]
+
+[node name="Hitbox" type="Area2D"]
+script = ExtResource("1_lvenf")

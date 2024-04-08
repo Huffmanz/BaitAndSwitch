@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://d3l3mltjhde4q"]
+
+[ext_resource type="Script" path="res://resources/upgrades/Upgrade.cs" id="1_2e8o1"]
+
+[resource]
+script = ExtResource("1_2e8o1")
+id = "air"
+maxQuantity = 10
+cost = 10
+costIncreasePerLevel = 2
+title = "Increase Air Supply"
+description = "Replenish air supply and increase it permanently."

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://d2ud0sidwpcga"]
+
+[ext_resource type="Script" path="res://resources/upgrades/Upgrade.cs" id="1_x8n3b"]
+
+[resource]
+script = ExtResource("1_x8n3b")
+id = "heal"
+maxQuantity = 999
+cost = 10
+costIncreasePerLevel = 0
+title = "Heal"
+description = "Heal to full health"

@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgdoa3fyo7atv"]
+
+[ext_resource type="Script" path="res://ui/UpgradeMenu.cs" id="1_o18tc"]
+[ext_resource type="Resource" uid="uid://d2ud0sidwpcga" path="res://resources/upgrades/upgrade_heal.tres" id="2_bv2hj"]
+[ext_resource type="Resource" uid="uid://bl1ob2q3w55jc" path="res://resources/upgrades/peircing_harpoon.tres" id="2_o67v0"]
+[ext_resource type="Resource" uid="uid://d0e61rhc4o3uj" path="res://resources/upgrades/upgrade_bounce_harpoon.tres" id="3_kt7iw"]
+[ext_resource type="Resource" uid="uid://d3l3mltjhde4q" path="res://resources/upgrades/upgrade_air_supply.tres" id="3_uxyof"]
+[ext_resource type="Resource" uid="uid://chs3hm5tygtkd" path="res://resources/upgrades/upgrade_spread_harpoon.tres" id="4_dsn5w"]
+[ext_resource type="PackedScene" uid="uid://bjf1t536q47rt" path="res://ui/upgrade_card.tscn" id="5_qow2y"]
+[ext_resource type="PackedScene" uid="uid://csv2ngpi4korc" path="res://ui/AudioButton.tscn" id="6_488s0"]
+
+[node name="UpgradeMenu" type="CanvasLayer" node_paths=PackedStringArray("gridContainer", "backButton")]
+process_mode = 3
+script = ExtResource("1_o18tc")
+upgrades = Array[Object]([ExtResource("2_bv2hj"), ExtResource("3_uxyof"), ExtResource("2_o67v0"), ExtResource("3_kt7iw"), ExtResource("4_dsn5w")])
+upgradeCard = ExtResource("5_qow2y")
+gridContainer = NodePath("ScrollContainer/MarginContainer/GridContainer")
+backButton = NodePath("MarginContainer/BackButton")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.411765)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+z_index = 110
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+columns = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+z_index = 111
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackButton" parent="MarginContainer" instance=ExtResource("6_488s0")]
+layout_mode = 2
+text = "Back"

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://8g1r52tisl6j"]
+
+[ext_resource type="Script" path="res://scenes/player/MetaProgression.cs" id="1_egwsn"]
+
+[node name="UpgradeProgression" type="Node"]
+script = ExtResource("1_egwsn")
+debugUpgrades = Array[Object]([])

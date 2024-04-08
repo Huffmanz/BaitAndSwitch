@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmcuvf0w8ndrm"]
+
+[ext_resource type="Script" path="res://scenes/player/Spear.cs" id="1_324qq"]
+[ext_resource type="PackedScene" uid="uid://cy0uhevxctxxd" path="res://scenes/vfx/blood.tscn" id="2_a4pkq"]
+[ext_resource type="Texture2D" uid="uid://csy7nva6tqtrn" path="res://assets/SpearFishing/harpoon_separated.png" id="2_oplq8"]
+[ext_resource type="PackedScene" uid="uid://itmfdhi1g1w" path="res://scenes/damage/hurtbox.tscn" id="3_ldaav"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x5s4i"]
+radius = 1.99999
+height = 23.9998
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vlya1"]
+radius = 1.99999
+height = 23.9998
+
+[node name="Spear" type="Node2D" node_paths=PackedStringArray("sprite", "environmentCollision", "airCollision", "hurtbox", "wallCheck", "screenNotifier2D")]
+script = ExtResource("1_324qq")
+sprite = NodePath("Sprite2D")
+environmentCollision = NodePath("Environment")
+airCollision = NodePath("Air")
+hurtbox = NodePath("Hurtbox")
+bloodVFX = ExtResource("2_a4pkq")
+wallCheck = NodePath("wallCheck")
+screenNotifier2D = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+z_as_relative = false
+position = Vector2(-3, 0)
+texture = ExtResource("2_oplq8")
+
+[node name="Environment" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment"]
+position = Vector2(-3, -9.31323e-10)
+rotation = 1.56698
+shape = SubResource("CapsuleShape2D_x5s4i")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_ldaav")]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-3, -9.31323e-10)
+rotation = 1.56698
+shape = SubResource("CapsuleShape2D_vlya1")
+
+[node name="Air" type="Area2D" parent="."]
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Air"]
+position = Vector2(-3, -9.31323e-10)
+rotation = 1.56698
+shape = SubResource("CapsuleShape2D_x5s4i")
+
+[node name="wallCheck" type="RayCast2D" parent="."]
+target_position = Vector2(11, 0)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-5, 0)

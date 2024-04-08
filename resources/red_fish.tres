@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=4 format=3 uid="uid://4ysetxtcxgji"]
+
+[ext_resource type="Texture2D" uid="uid://bgm31maocqx42" path="res://assets/SpearFishing/Icons - 18x18/Icons-NoBack.tres" id="1_dct1x"]
+[ext_resource type="Script" path="res://resources/FishResource.cs" id="1_s6o6b"]
+[ext_resource type="Texture2D" uid="uid://daaoc40uy0cmb" path="res://assets/SpearFishing/Fish1 - 16x16/Red.png" id="3_hka6k"]
+
+[resource]
+script = ExtResource("1_s6o6b")
+Name = "Red Fish"
+texture = ExtResource("3_hka6k")
+icon = ExtResource("1_dct1x")
+Weight = 10
+minCoins = 1
+maxCoins = 3

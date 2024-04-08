@@ -1,0 +1,63 @@
+[gd_scene load_steps=19 format=3 uid="uid://bo8kmdjuikbqk"]
+
+[ext_resource type="Script" path="res://scenes/fish/Fish.cs" id="1_y0f73"]
+[ext_resource type="Texture2D" uid="uid://blk7ls43nasut" path="res://assets/SpearFishing/Fish1 - 16x16/Orange.png" id="2_i8jvn"]
+[ext_resource type="PackedScene" uid="uid://d3vf1m0mojjkc" path="res://scenes/damage/health_component.tscn" id="2_widy1"]
+[ext_resource type="PackedScene" uid="uid://c5jt2b7fdsmwq" path="res://scenes/damage/hitbox.tscn" id="3_1x3ci"]
+[ext_resource type="Script" path="res://scenes/state_machine/StateMachine.cs" id="4_w75v0"]
+[ext_resource type="PackedScene" uid="uid://vu0hfa60jp4p" path="res://sfx/random_audio_player.tscn" id="5_x8squ"]
+[ext_resource type="AudioStream" uid="uid://wlbdu6g067dy" path="res://assets/sound/sfx/punch_grit_wet_impact_01.wav" id="6_llhsj"]
+[ext_resource type="AudioStream" uid="uid://3dpa6we2e01n" path="res://assets/sound/sfx/punch_grit_wet_impact_02.wav" id="7_7oroy"]
+[ext_resource type="AudioStream" uid="uid://wbucq6lyou7b" path="res://assets/sound/sfx/punch_grit_wet_impact_03.wav" id="8_y3qkt"]
+[ext_resource type="AudioStream" uid="uid://ddqwwmvo3ndip" path="res://assets/sound/sfx/punch_grit_wet_impact_04.wav" id="9_g7civ"]
+[ext_resource type="AudioStream" uid="uid://dd5hjuryba2dq" path="res://assets/sound/sfx/punch_grit_wet_impact_05.wav" id="10_of5ty"]
+[ext_resource type="AudioStream" uid="uid://cs4f0vas3h6vc" path="res://assets/sound/sfx/punch_grit_wet_impact_06.wav" id="11_3f77v"]
+[ext_resource type="AudioStream" uid="uid://xowjevhgsyww" path="res://assets/sound/sfx/punch_grit_wet_impact_07.wav" id="12_ipi7c"]
+[ext_resource type="AudioStream" uid="uid://bj850uux23yha" path="res://assets/sound/sfx/punch_grit_wet_impact_08.wav" id="13_lpd6a"]
+[ext_resource type="AudioStream" uid="uid://dg16j7swe6c5c" path="res://assets/sound/sfx/punch_grit_wet_impact_09.wav" id="14_er7qu"]
+[ext_resource type="AudioStream" uid="uid://c7fxudu38ofiw" path="res://assets/sound/sfx/punch_grit_wet_impact_10.wav" id="15_isgko"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gbab6"]
+radius = 4.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u6ej4"]
+
+[node name="FishBase" type="CharacterBody2D" node_paths=PackedStringArray("Sprite2D", "AnimationPlayer", "StateMachine", "healthComponent")]
+collision_layer = 0
+collision_mask = 32
+motion_mode = 1
+script = ExtResource("1_y0f73")
+Sprite2D = NodePath("Sprite2D")
+AnimationPlayer = NodePath("AnimationPlayer")
+StateMachine = NodePath("StateMachine")
+healthComponent = NodePath("HealthComponent")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_widy1")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_gbab6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_i8jvn")
+hframes = 8
+vframes = 4
+
+[node name="Hitbox" parent="." node_paths=PackedStringArray("healthComponent", "randomAudioPlayer") instance=ExtResource("3_1x3ci")]
+collision_layer = 8
+collision_mask = 4
+healthComponent = NodePath("../HealthComponent")
+randomAudioPlayer = NodePath("HitAudioPlayer")
+
+[node name="HitAudioPlayer" parent="Hitbox" instance=ExtResource("5_x8squ")]
+bus = &"sfx"
+audioStreams = Array[AudioStream]([ExtResource("6_llhsj"), ExtResource("7_7oroy"), ExtResource("8_y3qkt"), ExtResource("9_g7civ"), ExtResource("10_of5ty"), ExtResource("11_3f77v"), ExtResource("12_ipi7c"), ExtResource("13_lpd6a"), ExtResource("14_er7qu"), ExtResource("15_isgko")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_u6ej4")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("states")]
+script = ExtResource("4_w75v0")
+states = []
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=5 format=3 uid="uid://btwo4tu52fskl"]
+
+[ext_resource type="Script" path="res://resources/FishResource.cs" id="1_rwvt2"]
+[ext_resource type="Texture2D" uid="uid://t0xgxuqx06ow" path="res://assets/SpearFishing/SwordFish - 48x32/SwordFish.png" id="2_mpjdb"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vbsc0"]
+load_path = "res://.godot/imported/Icons - No Back.png-491c6471151f63eacfe91025fda09ace.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5b3vn"]
+atlas = SubResource("CompressedTexture2D_vbsc0")
+region = Rect2(19, 145, 16, 16)
+
+[resource]
+script = ExtResource("1_rwvt2")
+Name = "Sword Fish"
+texture = ExtResource("2_mpjdb")
+icon = SubResource("AtlasTexture_5b3vn")
+Weight = 3
+minCoins = 6
+maxCoins = 10

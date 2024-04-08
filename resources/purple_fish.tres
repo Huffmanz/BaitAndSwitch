@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=5 format=3 uid="uid://cfvhdvjr87kyd"]
+
+[ext_resource type="Script" path="res://resources/FishResource.cs" id="2_41hxc"]
+[ext_resource type="Texture2D" uid="uid://dvtpj82bckp4y" path="res://assets/SpearFishing/Fish1 - 16x16/Purple.png" id="2_y28rs"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pm805"]
+load_path = "res://.godot/imported/Icons - No Back.png-491c6471151f63eacfe91025fda09ace.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48go0"]
+atlas = SubResource("CompressedTexture2D_pm805")
+region = Rect2(90, 162, 18, 18)
+
+[resource]
+script = ExtResource("2_41hxc")
+Name = "Purple Fish"
+texture = ExtResource("2_y28rs")
+icon = SubResource("AtlasTexture_48go0")
+Weight = 10
+minCoins = 1
+maxCoins = 3
